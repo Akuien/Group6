@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap 4 files -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+        <title>Edit {{user}}</title>
+    
+        <style>
+            .input {
+                margin: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="" method="post">
+            {% csrf_token %}
+           <div class="jumbotron">
+            <div class="name input">
+                <h3 style="padding-bottom:1em">Update {{user}}</h3>
+                <label class="my_class" for="{{ form.fname.auto_id }}"></label>
+                {{ form.fname }}
+                <label class="my_class" for="{{ form.lname.auto_id }}"></label>
+                {{ form.lname }}
+            </div>
+            <div class="email input">
+                <label class="my_class" for="{{ form.email.auto_id }}"></label>
+                {{ form.email }}
+            </div>
+            <input type="submit" value="OK">
+        </div>
+        </form>
+    </body>
+</html>

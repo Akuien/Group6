@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap 4 files -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    
+        <style>
+        body {
+            text-align: center;
+        }
+        </style>
+    </head>
+    <body>
+        {%csrf_token%}
+        {% if found %}
+        <div class="jumbotron">
+            <h1>Welcome {{fname}} {{lname}}!</h1>
+            <p><b>Username: </b> {{usrnm}}</p>
+            <p><b>Email: </b> {{email}}</p>
+            <p><b>Position: </b> {{position}}</p>
+
+            <a href="update/">Update</a>
+        </div>
+
+        {% else %}
+            <h1>{{msg}}</h1>
+        {% endif %}
+    </body>
+</html>
