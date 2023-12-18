@@ -50,7 +50,22 @@ def home(request):
     return render(request, 'home.html')
 
 def welcome(request):
-    return render(request, 'welcome.html')
+    msg = None
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            msg = 'user created'
+            return render(request, 'login.html', {'form': form})
+        else:
+            msg = 'form is not valid'
+    else:
+        form = SignUpForm()
+
+    #return render(request, 'welcome.html')
+    return render(request, "home.html", {
+        "form": form,
+    })
 
 def user_dashboard(request):
     if request.user.is_authenticated:
@@ -321,9 +336,16 @@ def profile(request):
         # User is not authenticated (anonymous), handle it accordingly
         return render(request, 'anonymousProfile.html')
 
-
+@login_required
 def applicants(request):
-    return render(request, 'admin/applicants.html')
+    if request.user.is_authenticated:
+        applicants = LoanApplicant.objects.all()
+
+        return render(request, 'admin/applicants.html', {
+            "applicants": applicants,
+        })
+
+    return redirect(login)
 
 def predictions(request):
     context = {'messages': []}

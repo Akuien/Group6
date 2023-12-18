@@ -1,27 +1,172 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{%static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="{%static 'assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{%static 'assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{%static 'assets/plugins/jqvmap/jqvmap.min.css' %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{%static 'assets/dist/css/adminlte.min.css' %}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{%static 'assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{%static 'assets/plugins/daterangepicker/daterangepicker.css' %}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{%static 'assets/plugins/summernote/summernote-bs4.min.css' %}">
 
-  <!-- Bootstrap 4 files -->
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <title>AI Loan</title>
 
-  <title>home page</title>
-</head>
+    <style>
+      body {
+        background-color: #e9ecef;
+      }
 
-<body style="margin-left:80px">
-  <div class="Group 6"> <!-- page-header -->
-    <h1>This is your home page</h1>
-    <p>all your personal profile and and available function would be present here </p>
-  </div>
+      .nav {
+        background-color: #9616BD;
+      }
 
-  <hr>
+      .link {
+        padding-right: 2em;
+        font-size: 1.25em;
+      }
+
+      .nav-link {
+        color: white;
+      }
+
+      .nav-link:hover {
+        color: rgb(200, 200, 200);
+      }
+
+      .box {
+        display: inline-block;
+        width: 50%;
+        float: left;
+        padding: 2em;
+      }
+
+      .home {
+        padding: 2em;
+      }
+
+      .form {
+        background-color: rgb(200, 200, 240);
+        background-color: white;
+        padding: 2em;
+        border-radiums: 1em;
+        text-align: center;
+        width: 25%;
+        margin-left: 15em;
+      }
+
+      .left {
+        width: 55%;
+      }
+
+      form {
+        margin-top: 2em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-sm nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <img src="{%static 'assets/dist/img/AILOAN-removebg.png' %}" height="35%" width="35%">
+        </a>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li class="link"><a href="/register" class="nav-link">Sign Up</a></li>
+          <li class="link"><a href="/login" class="nav-link">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="home">
+      <div class="box left">
+        <h1>Welcome to AiLoan</h1>
+        <p>We help you simplify your loan application and eligibility process. Using AILoan, as a bank customer, you can quickly discover if you are eligible for a loan with your bank. As a bank admin, you can quickly check if your applicants are eligible for a loan. With AI, we help you reduce the risks, processing time and provide reliable feedback.</p>
+        <p><b>Already have an account?</b> <a href="/login">Login</a>!</p>
+      </div>
+
+      <div class="box form">
+        <h1>Interested?</h1>
+        <h3>Register now!</h3>
+        <span class="mb-0 text-muted">
+          {% if msg %}
+              {{ msg | safe }}
+          {% endif %}
+        </span>
+        <form action="" method="post">
+          <span class="mb-0 text-muted">
+            {% if msg %}
+                {{ msg | safe }}
+            {% endif %}
+          </span>
   
-
-
-
-</body>
+          {% csrf_token %}
+          <div class="input-group mb-3">
+              {{ form.username }}
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+              {{ form.email}}
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+              {{ form.password1 }}
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            {{ form.password2 }}
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex mb-5 align-items-center">
+            <label for="id_is_admin" class="control control--checkbox mb-0 mr-3">
+              <span class="caption">Admin</span>
+              {{ form.is_admin }}
+              <div class="control__indicator" id="adminCheckbox"></div>
+            </label>
+            
+            <label for="id_is_customer" class="control control--checkbox mb-0">
+              <span class="caption">Customer</span>
+              {{ form.is_customer }}
+              <div class="control__indicator" id="customerCheckbox"></div>
+            </label>
+          </div>
+            
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
