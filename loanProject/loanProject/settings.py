@@ -178,3 +178,5 @@ AUTH_USER_MODEL = 'loanApp.CustomUser'
 
 from django.core.servers.basehttp import WSGIServer
 WSGIServer.handle_error = lambda *args, **kwargs: None
+
+ACCOUNT_PASSWORD_RESET_REDIRECT_URL = '/login/'
