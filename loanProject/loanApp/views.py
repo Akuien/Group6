@@ -88,7 +88,6 @@ def user_dashboard(request):
 def loan_history(request):
     return render(request, 'user/loan-history.html')
 
-
 def create_applicant(request):
     context = {'messages': []}
 
@@ -97,48 +96,45 @@ def create_applicant(request):
 
         if form.is_valid():
             Age = form.cleaned_data['Age']
-            Income = form.cleaned_data['Income']
-            LoanAmount = form.cleaned_data['LoanAmount']
+            Income_SEK = form.cleaned_data['Income']
+            LoanAmount_SEK = form.cleaned_data['LoanAmount']
             CreditScore = form.cleaned_data['CreditScore']
             MonthsEmployed = form.cleaned_data['MonthsEmployed']
             LoanTerm = form.cleaned_data['LoanTerm']
             DTIRatio = form.cleaned_data['DTIRatio']
-            EmploymentType = form.cleaned_data['EmploymentType']
-
-            label_encoder_employmentType = preprocessing.LabelEncoder()
-            employmentType_encoded = label_encoder_employmentType.fit_transform([EmploymentType])[0]
-
-
-            model_path = 'newMLmodels/forest_model.joblib'
+            
+            manual_exchange_rate = 10
+            Income_USD = Income_SEK / manual_exchange_rate
+            LoanAmount_USD = LoanAmount_SEK / manual_exchange_rate
+           
+            model_path = 'newMLmodels/Tree_model.joblib'
             model = load_model(model_path)
-            prediction = model.predict([[Age, Income, LoanAmount, CreditScore, MonthsEmployed, LoanTerm, DTIRatio, employmentType_encoded]])
+            prediction = model.predict([[Age, Income_USD, LoanAmount_USD, CreditScore, MonthsEmployed, LoanTerm, DTIRatio]])
             print("Prediction Result:", prediction[0])
 
             save_to_database(
                 [{
                     'Age': Age,
-                    'Income': Income,
-                    'LoanAmount': LoanAmount,
+                    'Income': Income_USD,
+                    'LoanAmount': LoanAmount_USD,
                     'CreditScore': CreditScore,
                     'MonthsEmployed': MonthsEmployed,
                     'LoanTerm': LoanTerm,
                     'DTIRatio': DTIRatio,
-                    'EmploymentType': EmploymentType,
                 }],
                 [prediction[0]],
             )
 
             context['prediction_data'] = {
-                'headers': ['Age', 'Income', 'LoanAmount', 'CreditScore', 'MonthsEmployed', 'LoanTerm', 'DTIRatio', 'EmploymentType'],
+                'headers': ['Age', 'Income', 'LoanAmount', 'CreditScore', 'MonthsEmployed', 'LoanTerm', 'DTIRatio'],
                 'records': [({
                     'Age': Age,
-                    'Income': Income,
-                    'LoanAmount': LoanAmount,
+                    'Income': Income_USD,
+                    'LoanAmount': LoanAmount_USD,
                     'CreditScore': CreditScore,
                     'MonthsEmployed': MonthsEmployed,
                     'LoanTerm': LoanTerm,
                     'DTIRatio': DTIRatio,
-                    'EmploymentType': EmploymentType,
                 }, prediction[0])],
             }
             context['application_result'] = "Congratulations, you qualify for a loan!" if prediction[0] == 0 else "Sorry, your application has been rejected."
@@ -146,7 +142,6 @@ def create_applicant(request):
         form = LoanForm()
     context['form'] = form
     return render(request, 'user/create-applicant.html', context)
-
 
 @login_required
 def view_profile(request):
@@ -219,8 +214,8 @@ def delete_image(request):
 def reset_password(request):
     return render(request, 'user/reset-password.html')
 
-def privacy_policy(request):
-    return render(request, 'user/privacy-policy.html')
+def aboutUs(request):
+    return render(request, 'user/aboutUs.html')
 
 @login_required
 def remove_user(request):

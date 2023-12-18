@@ -122,9 +122,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/privacy-policy" class="nav-link" style=" color: #FFFFFF;">
+            <a href="/aboutUs" class="nav-link" style=" color: #FFFFFF;">
               <i class="fas fa-file-alt nav-icon"></i>
-              <p>Privacy Policy</p>
+              <p>About Us</p>
             </a>
           </li>
           <li class="nav-item">
@@ -200,7 +200,11 @@
   </div>
 
   <div class="form-group">
-    <label for="id_CreditScore">what is your Credit Score</label>
+    <label for="id_CreditScore">what is your Credit Score
+      <a href="#" data-toggle="modal" data-target="#creditScoreModal">
+        <i class="fas fa-question-circle ml-1"></i>
+    </a>
+    </label>
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-heart"></i></span>
@@ -220,7 +224,11 @@
   </div>
 
   <div class="form-group">
-    <label for="id_LoanTerm">LoanTerm?</label>
+    <label for="id_LoanTerm">LoanTerm
+      <a href="#" data-toggle="modal" data-target="#loanTermModal">
+        <i class="fas fa-question-circle ml-1"></i>
+    </a>
+    </label>
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-clock"></i></span>
@@ -230,7 +238,11 @@
   </div>
 
   <div class="form-group">
-    <label for="id_DTIRatio">DTIRatio?</label>
+    <label for="id_DTIRatio">DTIRatio?
+      <a href="#" data-toggle="modal" data-target="#dtiRatioModal">
+        <i class="fas fa-question-circle ml-1"></i>
+    </a>
+    </label>
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-clock"></i></span>
@@ -239,15 +251,103 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="id_EmploymentType">EmploymentType?</label>
-    <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class="fas fa-clock"></i></span>
+    <!-- Modal for DTIRatio explanation -->
+<div class="modal" id="dtiRatioModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+          <div class="modal-header">
+              <h5 class="modal-title">What is DTIRatio?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+
+          <div class="modal-body">
+              <p>
+                  DTIRatio stands for Debt-to-Income Ratio. It is a financial term that represents the percentage
+                  of your monthly gross income that goes toward paying debts.
+                  It is calculated by dividing the total monthly debt payments by the gross monthly income.
+              </p>
+          </div>
+
+          <div class="modal-footer">
+            <p> Refer to the
+              <a href="chat-assistance/"
+                   style="color: rgb(209, 106, 203)">chatbot</a>
+                   for further information
+            </p>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+
       </div>
-      {{form.EmploymentType}}
-    </div>
   </div>
+</div>
+
+<!-- Modal for Loan Term explanation -->
+<div class="modal" id="loanTermModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+          <div class="modal-header">
+              <h5 class="modal-title">What is Loan Term?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p>
+                  The loan term refers to the period of time over which a loan is scheduled to be repaid.
+                  It is expressed in months. Choosing the right loan term is important,
+                  as it can affect your monthly payments and the total cost of the loan.
+              </p>
+          </div>
+
+          <div class="modal-footer">
+            <p> Refer to the
+              <a href="chat-assistance/"
+                   style="color: rgb(209, 106, 203)">chatbot</a>
+                   for further information
+            </p>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal for Credit Score explanation -->
+<div class="modal" id="creditScoreModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+          <div class="modal-header">
+              <h5 class="modal-title">What is Credit Score?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+
+          <div class="modal-body">
+              <p>
+                  A credit score is a numerical representation of a your creditworthiness.
+                  It is based on your credit history and various financial behaviors.
+                  Credit scores typically range from 300 to 850, with higher scores indicating
+                  better creditworthiness.
+              </p>
+          </div>
+
+          <div class="modal-footer">
+            <p> Refer to the
+              <a href="chat-assistance/"
+                   style="color: rgb(209, 106, 203)">chatbot</a>
+                   for further information
+            </p>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
   <div class="form-group">
     <input class="btn btn-primary" type="submit" value="Submit">
   </div>
