@@ -1,11 +1,10 @@
 import pandas as pd
 import io
 import os
-from sklearn import preprocessing
 import joblib
 from django.http import HttpResponse
 from .models import *
-from django.db.models import Max
+
 
 def get_available_models():
     model_folder = 'newMLmodels'
@@ -36,9 +35,6 @@ def read_csv_file(csv_file):
 def apply_label_encoders(csv_data):
     records_list = csv_data.to_dict(orient="records")
 
-    label_encoder_marital = preprocessing.LabelEncoder()
-    csv_data['EmploymentType'] = label_encoder_marital.fit_transform(csv_data['EmploymentType'])
-
     return csv_data, records_list
 
 def load_model(model_path):
@@ -66,7 +62,6 @@ def save_to_database(records_list, predictions):
                 MonthsEmployed=record['MonthsEmployed'],
                 LoanTerm=record['LoanTerm'],
                 DTIRatio=record['DTIRatio'],
-                EmploymentType= record['EmploymentType'],
             )
             applicant.Default = prediction
             applicant.save()
