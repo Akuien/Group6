@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>User AiLoan | Dashboard</title>
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{%static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{%static 'assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <link rel="stylesheet"
+    href="{%static 'assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{%static 'assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
   <!-- JQVMap -->
@@ -46,22 +49,23 @@
       display: flex;
       justify-content: center;
     }
+
     .control-button img {
-      width: 18px; 
-      height: 18px; 
+      width: 18px;
+      height: 18px;
     }
 
     .controls div {
       padding: 12px 14px;
       cursor: pointer;
       border: 2px solid #83b9ed;
-      
+
       font-size: 16px;
       font-weight: bold;
       margin: 0 5px;
       border-radius: 10px;
     }
-    
+
     .controls div.disabled {
       opacity: 0;
       cursor: default;
@@ -91,13 +95,17 @@
     }
 
     .slide img {
-        max-width: 40%; /* Adjust the width of the image */
-        max-height: 100%;
-        border-radius: 15px; /* Add border-radius for rounded corners if desired */
+      max-width: 40%;
+      /* Adjust the width of the image */
+      max-height: 100%;
+      border-radius: 15px;
+      /* Add border-radius for rounded corners if desired */
     }
+
     .slide-content {
-        flex-grow: 1;
-        margin-left: 20px; /* Adjust the margin between image and text */
+      flex-grow: 1;
+      margin-left: 20px;
+      /* Adjust the margin between image and text */
     }
 
 
@@ -109,7 +117,7 @@
     .prev,
     .next {
       opacity: .3;
-      
+
     }
 
     .prev {
@@ -120,251 +128,270 @@
     .next {
       transform: translate(0, 30%) scale(0.8);
     }
-   
   </style>
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
+  <div class="wrapper">
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/create-applicant" class="nav-link">Home</a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="/create-applicant" class="nav-link">Home</a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-2" style="background-color: #9616bd;">
-    <!-- Brand Logo -->
-    <a href="/create-applicant" class="brand-link d-flex align-items-center">
-      <img src="{%static 'assets/dist/img/ailoan_logo_short.png' %}" alt="AIlOAN Logo" class="brand-image elevation-3" style="border-radius: 10px 10px; background-color: #FFFFFF;">
-      <span class="brand-text font-weight-bold">User Dashboard</span>
-    </a>
-    <!-- Sidebar -->
-    <div class="sidebar" style="background-color: #9616bd;">
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-2" style="background-color: #9616bd;">
+      <!-- Brand Logo -->
+      <a href="/create-applicant" class="brand-link d-flex align-items-center">
+        <img src="{%static 'assets/dist/img/ailoan_logo_short.png' %}" alt="AIlOAN Logo" class="brand-image elevation-3"
+          style="border-radius: 10px 10px; background-color: #FFFFFF;">
+        <span class="brand-text font-weight-bold">User Dashboard</span>
+      </a>
+      <!-- Sidebar -->
+      <div class="sidebar" style="background-color: #9616bd;">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-user"></i>
-                    <p>
-                      Account Setting
-                      <i class="fas fa-angle-left right"></i>
-                    </p>
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
+                <p>
+                  Account Setting
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/view-profile" class="nav-link">
+                    <i class="fas fa-cogs nav-icon"></i>
+                    <p>Profile</p>
                   </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="/view-profile" class="nav-link">
-                      <i class="fas fa-cogs nav-icon"></i>
-                      <p>Profile</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="/reset-password" class="nav-link">
-                      <i class="fas fa-key nav-icon"></i>
-                      <p>Reset Password</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="/loan-history" class="nav-link">
-                      <i class="fas fa-history nav-icon"></i>
-                      <p>Loan history</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-          <li class="nav-item">
-            <a href="/create-application" class="nav-link" style="color: #FFFFFF;">
-              <i class="fas fa-plus nav-icon"></i>
-              <p>Create Application</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/chat-assistance" class="nav-link" style=" color: #FFFFFF;">
-              <i class="fas fa-comments nav-icon"></i>
-              <p>Chat assistance</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/aboutUs" class="nav-link" style=" color: #FFFFFF;">
-              <i class="fas fa-file-alt nav-icon"></i>
-              <p>About Us</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/logout_user" class="nav-link" style="color: #FFFFFF;">
-              <i class="fas fa-sign-out-alt nav-icon"></i>
-              <p>Logout</p>
-            </a>
-          </li>
+                </li>
+                <li class="nav-item">
+                  <a href="/reset-password" class="nav-link">
+                    <i class="fas fa-key nav-icon"></i>
+                    <p>Reset Password</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/loan-history" class="nav-link">
+                    <i class="fas fa-history nav-icon"></i>
+                    <p>Loan history</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="/create-application" class="nav-link" style="color: #FFFFFF;">
+                <i class="fas fa-plus nav-icon"></i>
+                <p>Create Application</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/chat-assistance" class="nav-link" style=" color: #FFFFFF;">
+                <i class="fas fa-comments nav-icon"></i>
+                <p>Chat assistance</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/aboutUs" class="nav-link" style=" color: #FFFFFF;">
+                <i class="fas fa-file-alt nav-icon"></i>
+                <p>About Us</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/logout_user" class="nav-link" style="color: #FFFFFF;">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <p>Logout</p>
+              </a>
+            </li>
 
-        </ul>
-      </nav>
-      
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-</aside>
-   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <img src="{%static 'assets/dist/img/AILOAN-removebg.png' %}">
+          </ul>
+        </nav>
+
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <img src="{%static 'assets/dist/img/AILOAN-removebg.png' %}">
+            </div>
           </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+        </div><!-- /.container-fluid -->
+      </section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">
-            Welcome to AILoan: Revolutionizing Lending with Intelligence
-          </h4>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <p> AILoan, founded in 2023, is a purely online lending platform that combines technology and A.I.solutions. We
-            leverage A.I. and big data analytics to provide an innovative online lending experience. Through innovation,
-            AILoan offers a humanized, tailor-made and simplified loan application process, delivering a seamless lending service
-            to you in a matter of seconds
-          </p>
-        <!-- /.card-body -->
+      <!-- Main content -->
+      <section class="content">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">
+              AILoan: Revolutionizing Lending with Intelligence
+            </h4>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <p> AILoan, founded in 2023, is a purely online lending platform that combines technology and A.I.solutions.
+              We
+              leverage A.I. and big data analytics to provide an innovative online lending experience. Through
+              innovation,
+              AILoan offers a humanized, tailor-made and simplified loan application process, delivering a seamless
+              lending service
+              to you in a matter of seconds
+            </p>
+            <!-- /.card-body -->
 
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div class="card" style="width: 18rem;">
-              <img class="card-img-top img-fluid" src="{%static 'images/management.png' %}" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Data Risk Managament</h5>
-                <p class="card-text">Utilizing cutting-edge technology for real-time analysis of extensive data, AILoan enables the automatic assessment of risk levels.
-                   This breakthrough allows us to provide instant online quotes, striking the ideal equilibrium between robust risk management and swift approval processes.</p>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top img-fluid" src="{%static 'images/management.png' %}" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">Data Risk Managament</h5>
+                    <p class="card-text">Utilizing cutting-edge technology for real-time analysis of extensive data,
+                      AILoan enables the automatic assessment of risk levels.
+                      This breakthrough allows us to provide instant online quotes, striking the ideal equilibrium
+                      between robust risk management and swift approval processes.</p>
 
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top img-fluid" src="{%static 'images/cyber-security.png' %}"
+                    alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">Safe CyberSecurity</h5>
+                    <p class="card-text">In recognizing the undeniable significance of cybersecurity, AIloan employs a
+                      comprehensive approach to system security and monitoring.
+                      This includes stringent identity authentication procedures and privacy policies, all designed to
+                      ensure the utmost protection of your privacy.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-4">
-            <div class="card" style="width: 18rem;">
-              <img class="card-img-top img-fluid" src="{%static 'images/cyber-security.png' %}" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Safe CyberSecurity</h5>
-                <p class="card-text">In recognizing the undeniable significance of cybersecurity, AIloan employs a comprehensive approach to system security and monitoring.
-                   This includes stringent identity authentication procedures and privacy policies, all designed to ensure the utmost protection of your privacy.</p>
+          <div class="container">
+            <h1>Our Mission and Values</h1>
+            <div class="slider">
+              <div class="slide" data-slide='1' style="background-color: rgb(226, 192, 231)">
+                <img src="{%static 'images/accounting.png' %}" alt="Image 1">
+                <div class="slide-content">
+                  <dt>Description</dt>
+                  <p>AILoan is solely online, no branches, low cost and high efficient operatng model which allows you
+                    to enjoy the full
+                    benefit of a simplified and expeditious loan application process and a lower intrest rate
+                  </p>
+                </div>
+              </div>
+              <div class="slide" data-slide='2' style="background-color: rgb(171, 194, 237)">
+                <img src="{%static 'images/online.png' %}" alt="Image 1">
+                <div class="slide-content">
+                  <dt>Customer-Centric Approach</dt>
+                  <p>We prioritize your experience. Our user-friendly platform is designed with you in mind, providing a
+                    humanized,
+                    tailor-made, and simplified loan application process. Your convenience and satisfaction are at the
+                    core of everything we do.
+                  </p>
+                </div>
+              </div>
+              <div class="slide" data-slide='3' style="background-color: rgb(226, 192, 231)">
+                <img src="{%static 'images/analytics.png' %}" alt="Image 1">
+                <div class="slide-content">
+                  <dt>Leading the Way in Technological Innovation</dt>
+                  <p>At the heart of AIloan is our advanced AI loan prediction system. By harnessing the capabilities of
+                    artificial intelligence and
+                    big data analytics, we've transformed the lending landscape. Our technology ensures real-time
+                    analysis of extensive data, allowing
+                    for automatic risk assessment and instant online quotes. The result? A harmonious blend of robust
+                    risk management and swift approval processes.
+                  </p>
+                </div>
+              </div>
+              <div class="slide" data-slide='4' style="background-color: rgb(171, 194, 237)">
+                <img src="{%static 'images/chatbot.png' %}" alt="Image 1">
+                <div class="slide-content">
+                  <dt>Leading the Way in Technological Innovation</dt>
+                  <p>At the heart of AIloan is our advanced AI loan prediction system. By harnessing the capabilities of
+                    artificial intelligence and
+                    big data analytics, we've transformed the lending landscape. Our technology ensures real-time
+                    analysis of extensive data, allowing
+                    for automatic risk assessment and instant online quotes. The result? A harmonious blend of robust
+                    risk management and swift approval processes.
+                  </p>
+                </div>
+              </div>
+              <div class="slide slide--active" data-slide='4' style="background-color: rgb(226, 192, 231)"></div>
+            </div>
+            <div class="controls">
+              <div id="back" class="control-button" onclick="prevSlide()">
+                <img src="{%static 'images/caret-up.png' %}" alt="Back">
+              </div>
+              <div id="forward" class="control-button" onclick="nextSlide()">
+                <img src="{%static 'images/caret-down.png' %}" alt="Forward">
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="container">
-        <h1>Our Mission and Values</h1>
-        <div class="slider">
-          <div class="slide" data-slide='1' style="background-color: rgb(226, 192, 231)">
-            <img src="{%static 'images/accounting.png' %}" alt="Image 1">
-            <div class="slide-content">
-            <dt>Description</dt>
-            <p>AILoan is solely online, no branches, low cost and high efficient operatng model which allows you to enjoy the full 
-              benefit of a simplified and expeditious loan application process and a lower intrest rate
-            </p>
-        </div>
-      </div>
-          <div class="slide" data-slide='2' style="background-color: rgb(171, 194, 237)">
-            <img src="{%static 'images/online.png' %}" alt="Image 1">
-            <div class="slide-content">
-            <dt>Customer-Centric Approach</dt>
-            <p>We prioritize your experience. Our user-friendly platform is designed with you in mind, providing a humanized,
-               tailor-made, and simplified loan application process. Your convenience and satisfaction are at the core of everything we do.
-            </p>
-          </div>
-        </div>
-          <div class="slide" data-slide='3' style="background-color: rgb(226, 192, 231)">
-            <img src="{%static 'images/analytics.png' %}" alt="Image 1">
-            <div class="slide-content">
-            <dt>Leading the Way in Technological Innovation</dt>
-            <p>At the heart of AIloan is our advanced AI loan prediction system. By harnessing the capabilities of artificial intelligence and 
-              big data analytics, we've transformed the lending landscape. Our technology ensures real-time analysis of extensive data, allowing 
-              for automatic risk assessment and instant online quotes. The result? A harmonious blend of robust risk management and swift approval processes.
-            </p>
-          </div>
-        </div>
-        <div class="slide" data-slide='4' style="background-color: rgb(171, 194, 237)">
-            <img src="{%static 'images/chatbot.png' %}" alt="Image 1">
-            <div class="slide-content">
-            <dt>Leading the Way in Technological Innovation</dt>
-            <p>At the heart of AIloan is our advanced AI loan prediction system. By harnessing the capabilities of artificial intelligence and 
-              big data analytics, we've transformed the lending landscape. Our technology ensures real-time analysis of extensive data, allowing 
-              for automatic risk assessment and instant online quotes. The result? A harmonious blend of robust risk management and swift approval processes.
-            </p>
-          </div>
-        </div>
-          <div class="slide slide--active" data-slide='4' style="background-color: rgb(226, 192, 231)"></div>
-        </div>
-        <div class="controls">
-          <div id="back" class="control-button" onclick="prevSlide()">
-            <img src="{%static 'images/caret-up.png' %}" alt="Back">
-          </div>
-          <div id="forward" class="control-button" onclick="nextSlide()">
-            <img src="{%static 'images/caret-down.png' %}" alt="Forward">
-          </div>
-        </div>
-      </div>
     </div>
+    <!-- /.card -->
   </div>
-      <!-- /.card -->
-    </div>
-    
-    </section>
-    <!-- /.content -->
+
+  </section>
+  <!-- /.content -->
   </div>
-  
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
-</div>
+  </div>
 
-<!-- jQuery -->
-<script src="{%static 'assets/plugins/jquery/jquery.min.js' %}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{%static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="{%static 'assets/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- ChartJS -->
-<script src="{%static 'assets/plugins/chart.js/Chart.min.js' %}"></script>
-<!-- Sparkline -->
-<script src="{%static 'assets/plugins/sparklines/sparkline.js' %}"></script>
-<!-- JQVMap -->
-<script src="{%static 'assets/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
-<script src="{%static 'assets/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
-<!-- jQuery Knob Chart -->
-<script src="{%static 'assets/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
-<!-- daterangepicker -->
-<script src="{%static 'assets/plugins/moment/moment.min.js' %}"></script>
-<script src="{%static 'assets/plugins/daterangepicker/daterangepicker.js' %}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{%static 'assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
-<!-- Summernote -->
-<script src="{%static 'assets/plugins/summernote/summernote-bs4.min.js' %}"></script>
-<!-- overlayScrollbars -->
-<script src="{%static 'assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{%static 'assets/dist/js/adminlte.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
+  <!-- jQuery -->
+  <script src="{%static 'assets/plugins/jquery/jquery.min.js' %}"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="{%static 'assets/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="{%static 'assets/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- ChartJS -->
+  <script src="{%static 'assets/plugins/chart.js/Chart.min.js' %}"></script>
+  <!-- Sparkline -->
+  <script src="{%static 'assets/plugins/sparklines/sparkline.js' %}"></script>
+  <!-- JQVMap -->
+  <script src="{%static 'assets/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+  <script src="{%static 'assets/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="{%static 'assets/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+  <!-- daterangepicker -->
+  <script src="{%static 'assets/plugins/moment/moment.min.js' %}"></script>
+  <script src="{%static 'assets/plugins/daterangepicker/daterangepicker.js' %}"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="{%static 'assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+  <!-- Summernote -->
+  <script src="{%static 'assets/plugins/summernote/summernote-bs4.min.js' %}"></script>
+  <!-- overlayScrollbars -->
+  <script src="{%static 'assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{%static 'assets/dist/js/adminlte.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
 </body>
+
 </html>
