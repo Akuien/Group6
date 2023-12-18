@@ -49,8 +49,7 @@ class LoanForm(forms.Form):
     MonthsEmployed = forms.IntegerField(label= "Months Employed")
     LoanTerm = forms.IntegerField(label= "Loan Term")
     DTIRatio = forms.FloatField(label= "Debt To Income Ratio")
-    EmploymentType = forms.ChoiceField(choices=[('----', '----'), ('full time','Full time' ), ('part time', 'Part time'), ('self employed', 'Self employed'), ('unemployed', 'Unemployed')], required=True)
-    
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(

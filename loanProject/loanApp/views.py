@@ -16,6 +16,9 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 import numpy as np
 import os
 from openai import OpenAI
+from allauth.account.views import PasswordResetView as AllauthPasswordResetView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView
 
 
 # Create your views here.
@@ -616,3 +619,13 @@ def get_model_metadata(request):
         error_message = f"Error during metadata calculation: {str(e)}"
         metadata = {'success': False, 'error': error_message}
         return JsonResponse(metadata)
+
+
+class CustomPasswordResetView(AllauthPasswordResetView):
+    template_name = 'custom_password_reset.html'  
+
+    success_url = reverse_lazy('password_reset_done')  
+
+    
+class CustomPasswordResetDoneView(TemplateView):
+    template_name = 'custom_password_reset_done.html'  

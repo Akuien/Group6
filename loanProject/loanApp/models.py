@@ -36,7 +36,6 @@ class LoanApplicant(models.Model):
     MonthsEmployed = models.IntegerField()
     LoanTerm = models.IntegerField()
     DTIRatio = models.FloatField()
-    EmploymentType = models.CharField(max_length=50, choices=[('Full time', 'Full-time'), ('Part time', 'Part-time'), ('Self employed', 'Self-employed'), ('unemployed', 'Unemployed')])
     Default = models.IntegerField(null=True, blank=True)
     
 class Applicant(models.Model):
