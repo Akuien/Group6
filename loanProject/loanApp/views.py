@@ -55,17 +55,32 @@ def logout_user(request):
     return redirect('welcome')
 
 def welcome(request):
+    form = LoginForm(request.POST or None)
     msg = None
+
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            msg = 'user created'
-            return render(request, 'login.html', {'form': form})
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    messages.success(request, 'Login successful')
+
+                    if user.is_admin:
+                        return redirect('predictions')
+                    elif user.is_customer:
+                        return redirect('create_applicant')
+                    else:
+                        msg = 'Invalid user role'
+                else:
+                    msg = 'User is not active'
+            else:
+                msg = 'Invalid credentials'
         else:
-            msg = 'form is not valid'
-    else:
-        form = SignUpForm()
+            msg = 'Error validating form'
 
     return render(request, "home.html", {
         "form": form,

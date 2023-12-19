@@ -87,8 +87,8 @@
         </a>
 
         <ul class="nav navbar-nav navbar-right">
-          <li class="link"><a href="/register" class="nav-link">Sign Up</a></li>
           <li class="link"><a href="/login" class="nav-link">Login</a></li>
+          <li class="link"><a href="/register" class="nav-link">Sign Up</a></li>
         </ul>
       </div>
     </nav>
@@ -97,35 +97,21 @@
       <div class="box left">
         <h1>Welcome to AiLoan</h1>
         <p>We help you simplify your loan application and eligibility process. Using AILoan, as a bank customer, you can quickly discover if you are eligible for a loan with your bank. As a bank admin, you can quickly check if your applicants are eligible for a loan. With AI, we help you reduce the risks, processing time and provide reliable feedback.</p>
-        <p><b>Already have an account?</b> <a href="/login">Login</a>!</p>
+        <p><b>Are you interested?</b> <a href="/register">Sign up</a> right now!</p>
       </div>
 
       <div class="box form">
-        <h1>Interested?</h1>
-        <h3>Register now!</h3>
+        <h1>Already have an account?</h1>
+        <h3>Sign right in!</h3>
         <span class="mb-0 text-muted">
           {% if msg %}
               {{ msg | safe }}
           {% endif %}
         </span>
-        <form action="" method="post">
-          <span class="mb-0 text-muted">
-            {% if msg %}
-                {{ msg | safe }}
-            {% endif %}
-          </span>
-  
+        <form method="post">
           {% csrf_token %}
           <div class="input-group mb-3">
               {{ form.username }}
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-              {{ form.email}}
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -133,37 +119,24 @@
             </div>
           </div>
           <div class="input-group mb-3">
-              {{ form.password1 }}
+              {{ form.password }}
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
-          <div class="input-group mb-3">
-            {{ form.password2 }}
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
+          <div class="row">
+            <div class="col-8">
+              <div class="forgot-password">
+                  <a href="{% url 'password_reset' %}" style="color: #090303;">Forgot Password?</a>
               </div>
             </div>
-          </div>
-          <div class="d-flex mb-5 align-items-center">
-            <label for="id_is_admin" class="control control--checkbox mb-0 mr-3">
-              <span class="caption">Admin</span>
-              {{ form.is_admin }}
-              <div class="control__indicator" id="adminCheckbox"></div>
-            </label>
-            
-            <label for="id_is_customer" class="control control--checkbox mb-0">
-              <span class="caption">Customer</span>
-              {{ form.is_customer }}
-              <div class="control__indicator" id="customerCheckbox"></div>
-            </label>
-          </div>
-            
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <!-- /.col -->
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            </div>
+            <!-- /.col -->
           </div>
         </form>
       </div>
