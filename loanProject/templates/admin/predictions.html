@@ -134,7 +134,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="/dashboard" class="nav-link">Home</a>
+          <a href="/predictions" class="nav-link">Home</a>
         </li>
       </ul>
       <!-- Right navbar links -->
@@ -152,7 +152,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-2" style="background-color: #2b70d2;">
       <!-- Brand Logo -->
-      <a href="/dashboard" class="brand-link d-flex align-items-center">
+      <a href="/predictions" class="brand-link d-flex align-items-center">
         <img src="{%static 'assets/dist/img/ailoan_logo_short.png' %}" alt="AIlOAN Logo" class="brand-image elevation-3"
           style="border-radius: 10px 10px; background-color: #FFFFFF;">
         <span class="brand-text font-weight-bold">Admin Dashboard</span>
@@ -241,17 +241,16 @@
                   <label for="csv_file">Upload CSV File:</label>
                   <input type="file" class="form-control" name="csv_file" accept=".csv" required>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Upload and Predict</button>
-                
+                <button type="submit" class="btn btn-primary">Upload and Predict</button> 
               </form>
+
               <label class="switch">
                 <input type="checkbox" id="toggleSwitch">
                 <span class="slider"></span>
               </label>
               <p id="viewIndicator" style="margin-top: 10px; color: #6c757d;"></p>
+              
             </section>
-
               <section class="content">
               <div id="chartTableContainer">
               <div id="pie-chart-container" style="height: 300px;">
