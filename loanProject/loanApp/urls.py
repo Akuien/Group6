@@ -1,15 +1,9 @@
 from django.urls import path,include
-
 from loanApp.views import *
-from django.contrib import admin
-# from allauth.account.views import PasswordResetView, PasswordResetDoneView
 from django.conf import settings
 from django.conf.urls.static import static
 from loanApp.views import login_view
-from .views import get_model_metadata
 from .views import CustomPasswordResetView, CustomPasswordResetDoneView
-
-
 
 urlpatterns = [
     path('home', home, name='home'),
@@ -26,7 +20,6 @@ urlpatterns = [
     path('view-profile',view_profile, name='view_profile'),
     path('reset-password',reset_password, name='reset_password'),
     path('create-application',create_applicant, name='create_applicant'),
-    path('get_model_metadata/', get_model_metadata, name='get_model_metadata'),
     path('', welcome, name='welcome'),
     path('login/', login_view, name ='login'),
     path('accounts/', include('allauth.urls')),
