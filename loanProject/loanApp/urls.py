@@ -1,8 +1,7 @@
 from django.urls import path,include
-from loanApp.views import *
 from django.conf import settings
 from django.conf.urls.static import static
-from loanApp.views import login_view
+from .views import  *
 from .views import CustomPasswordResetView, CustomPasswordResetDoneView
 
 urlpatterns = [

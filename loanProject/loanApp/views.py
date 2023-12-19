@@ -302,6 +302,29 @@ def profile(request):
         return render(request, 'anonymousProfile.html')
 
 
+def ask_openai(message):
+    try:
+        customPrompt = f"I am thinking of applying for a loan and {message}"
+        response = client.completions.create(
+        model="gpt-3.5-turbo-instruct",
+        prompt=customPrompt,
+        max_tokens=150,  
+        temperature=0.7
+    )
+        answer = response.choices[0].text.strip()
+        return answer
+    except Exception as e:
+        print(f"Error in ask_openai: {e}")
+        return "Sorry, I couldn't understand that."
+
+def chat_assistance(request):
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        print('Received message:', message)
+        response = ask_openai(message)
+        print('Sending response:', response)
+        return JsonResponse({'message': message, 'response': response})
+    return render(request, 'user/chat-assistance.html')
 
 
 ### Admin functions 
@@ -447,14 +470,28 @@ def reports(request):
     approval_rate_formatted = "{:.2f}".format(approval_rate)
     rejection_rate_formatted = "{:.2f}".format(rejection_rate)
     data = LoanApplicant.objects.values_list('Default', flat=True)
+    #data2 = LoanApplicant.objects.values('Default', 'Income')
 
-   
     fig = px.histogram(x=data, nbins=10, title='Distribution of approval rates',
                        labels={'x': 'Loan Status', 'y': 'Frequency'})
 
     fig.update_layout(xaxis=dict(tickvals=[0, 1]))
     fig.update_layout(height=300, width=400) 
     plot_html = fig.to_html(full_html=False)
+
+    # Create a pie chart (donut chart) using Plotly
+    labels = ['Approved', 'Rejected']
+    values = [approval_rate_formatted, rejection_rate_formatted]
+
+    fig = px.pie(values=values, names=labels, hole=0.3, title='Approval and Rejection Rates')
+    # Convert the Plotly figure to HTML
+    plotDonut_html = fig.to_html(full_html=False)
+
+    """ df = pd.DataFrame.from_records(data2)
+    # Create a scatter plot using Plotly Express
+    fig = px.scatter(df, x='Income', y='Default', color='Default', title='Relationship between Default and Income')
+    # Convert the Plotly figure to HTML
+    plotScatter_html = fig.to_html(full_html=False)"""
 
     context = {
         'total_applications': total_applications,
@@ -463,34 +500,11 @@ def reports(request):
         'approval_rate': approval_rate_formatted,
         'rejection_rate': rejection_rate_formatted,
         'plot_html': plot_html,
+        'plotDonut_html': plotDonut_html,
+        #'plotScatter_html': plotScatter_html,
     }
 
     return render(request, 'admin/reports.html', context)
-
-def ask_openai(message):
-    try:
-        customPrompt = f"I am thinking of applying for a loan and {message}"
-        response = client.completions.create(
-        model="gpt-3.5-turbo-instruct",
-        prompt=customPrompt,
-        max_tokens=150,  
-        temperature=0.7
-    )
-        answer = response.choices[0].text.strip()
-        return answer
-    except Exception as e:
-        print(f"Error in ask_openai: {e}")
-        return "Sorry, I couldn't understand that."
-
-def chat_assistance(request):
-    if request.method == 'POST':
-        message = request.POST.get('message')
-        print('Received message:', message)
-        response = ask_openai(message)
-        print('Sending response:', response)
-        return JsonResponse({'message': message, 'response': response})
-    return render(request, 'user/chat-assistance.html')
-
 
 class CustomPasswordResetView(AllauthPasswordResetView):
     template_name = 'custom_password_reset.html'  

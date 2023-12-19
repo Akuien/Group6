@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="{%static 'assets/plugins/daterangepicker/daterangepicker.css' %}">
   <!-- summernote -->
   <link rel="stylesheet" href="{%static 'assets/plugins/summernote/summernote-bs4.min.css' %}">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -128,35 +129,21 @@
       <div class="container-fluid">
         <div class="card card-primary card-outline">
           <div class="card-header">
-            <h3 class="card-title">Reports</h3>
+            <h3 class="card-title">Loan Application Statistics</h3>
           </div> <!-- /.card-body -->
           <div class="card-body">
-
-            <body>
-              <h2>Loan Application Statistics</h2>
-              
+            <div>
               <p>Total Number of Applications: {{ total_applications }}</p>
-              
               <p>Approval Rate: {{ approval_rate }}%</p>
               <p>Rejection Rate: {{ rejection_rate }}%</p>
-              
               <p>Total Approved Applications: {{ approved_applications }}</p>
               <p>Total Rejected Applications: {{ rejected_applications }}</p>
-          </body>
-              <title>Histogram</title>
-    <!-- Include Plotly dependencies -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            </div>
+      {{ plot_html|safe }}    
+      {{ plotDonut_html|safe }}
+     <!-- /.{{ plotScatter_html|safe }} --> 
+     
 
-    <body>
-      
-      <!-- Plotly plot container -->
-      <div id="plotly-plot"></div>
-  
-      <!-- Inject the Plotly plot HTML -->
-      <script>
-          document.getElementById('plotly-plot').innerHTML = "{{ plot_html|safe }}";
-      </script>
-  </body>
           </div><!-- /.card-body -->
         </div>
       </div><!-- /.container-fluid -->
@@ -201,5 +188,6 @@
 <script src="{%static 'assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{%static 'assets/dist/js/adminlte.js' %}"></script>
+
 </body>
 </html>
