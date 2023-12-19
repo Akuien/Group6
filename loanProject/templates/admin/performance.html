@@ -26,7 +26,46 @@
     <link rel="stylesheet" href="{%static 'assets/plugins/daterangepicker/daterangepicker.css' %}">
     <!-- summernote -->
     <link rel="stylesheet" href="{%static 'assets/plugins/summernote/summernote-bs4.min.css' %}">
+
+    <style>
+      
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        th, td {
+            padding: 25px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #a8a8aa; 
+        }
+
+        .styled-select {
+        display: block;
+        width: 100%;
+        padding: 20px;
+        font-size: 18px;
+        line-height: 1.4;
+        color: #080000;
+        border: 2px solid #a6a4a4;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    .styled-select:focus {
+        outline: none;
+        border-color: #2776ca;
+    }
+    
+    </style>
+
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
     <!-- Navbar -->
@@ -37,7 +76,7 @@
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="/dashboard" class="nav-link">Home</a>
+                <a href="/predictions" class="nav-link">Home</a>
             </li>
         </ul>
         <!-- Right navbar links -->
@@ -55,7 +94,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-2" style="background-color: #2b70d2;">
         <!-- Brand Logo -->
-        <a href="/dashboard" class="brand-link d-flex align-items-center">
+        <a href="/predictions" class="brand-link d-flex align-items-center">
             <img src="{%static 'assets/dist/img/ailoan_logo_short.png' %}" alt="AIlOAN Logo" class="brand-image elevation-3" style="border-radius: 10px 10px; background-color: #FFFFFF;">
             <span class="brand-text font-weight-bold">Admin Dashboard</span>
         </a>
@@ -128,64 +167,73 @@
                     <div class="card-header">
                         <h3 class="card-title">Performance</h3>
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-body">
-                        <p></p>
-                        {% load static %}
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <title>Model Evaluation</title>
-                        </head>
-                        <style>
-                            /* Add your styles */
-                        </style>
-                        <body>
-                        <div class="container">
-                            {% if error %}
-                                <p style="color: red;">Error: {{ error }}</p>
-                            {% else %}
-                                <h1>Model Evaluation Results</h1>
-                                <p>Accuracy: {{ accuracy }}</p>
-
-                                <h2>Confusion Matrix:</h2>
-                                <table>
-                                    <tr>
-                                        <th></th>
-                                        <th>Predicted 0</th>
-                                        <th>Predicted 1</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Actual 0</th>
-                                        <td>{{ confusion_matrix.0.0 }}</td>
-                                        <td>{{ confusion_matrix.0.1 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Actual 1</th>
-                                        <td>{{ confusion_matrix.1.0 }}</td>
-                                        <td>{{ confusion_matrix.1.1 }}</td>
-                                    </tr>
-                                </table>
-                            {% endif %}
-                        </div>
-                        </body>
-                        </html>
-                    </div><!-- /.card-body -->
+        <!-- /.card-body -->
+        <div class="card-body">
+            <p></p>
+            {% load static %}
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Model Evaluation</title>
+            </head>
+            <style>
+                /* Add your styles */
+            </style>
+            <body>
+                <form method="post" action="{% url 'performance' %}">
+                    {% csrf_token %}
+                    <label for="selected_model">Select Model:</label>
+                    <select  name="selected_model" id="selected_model" class="styled-select">
+                        {% for model in available_models %}
+                            <option value="{{ model }}" {% if model == selected_model %}selected{% endif %}>{{ model }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="submit-button">Submit</button>
+                </form>
+                <div class="container">
+                    {% if error %}
+                        <p style="color: red;">Error: {{ error }}</p>
+                    {% else %}
+                        <h1>Model Evaluation Results</h1>
+                        <p>Accuracy: {{ accuracy }}</p>
+                
+                        <h2>Confusion Matrix:</h2>
+                        <table border="1">
+                            <tr>
+                                <th></th>
+                                <th>Predicted 0</th>
+                                <th>Predicted 1</th>
+                            </tr>
+                            <tr>
+                                <th>Actual 0</th>
+    <td data-key="0.0" style="background-color: rgb(221, 100, 221); color: white;">{{ confusion_matrix.0.0 }}</td>
+    <td data-key="0.1" style="background-color: rgb(80, 147, 235); color: white;">{{ confusion_matrix.0.1 }}</td>
+</tr>
+<tr>
+    <th>Actual 1</th>
+    <td data-key="1.0" style="background-color: rgb(80, 147, 235); color: white;">{{ confusion_matrix.1.0 }}</td>
+    <td data-key="1.1" style="background-color: rgb(221, 100, 221); color: white;">{{ confusion_matrix.1.1 }}</td>
+</tr>
+                        </table>
+                    {% endif %}
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
+            </body>
+            </html>
+        </div><!-- /.card-body -->
     </div>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
+</div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 </div>
 
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+<!-- Control sidebar content goes here -->
+</aside>
+</div>
 <!-- jQuery -->
 <script src="{%static 'assets/plugins/jquery/jquery.min.js' %}"></script>
 <!-- jQuery UI 1

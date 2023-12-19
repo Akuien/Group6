@@ -26,6 +26,90 @@
   <link rel="stylesheet" href="{%static 'assets/plugins/daterangepicker/daterangepicker.css' %}">
   <!-- summernote -->
   <link rel="stylesheet" href="{%static 'assets/plugins/summernote/summernote-bs4.min.css' %}">
+  <style>
+    body {
+      background-color: #7bbac9;
+      margin: 0;
+    }
+    .container {
+      position: relative;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      margin: 50px auto 0;
+      width: 650px;
+      max-width: 900px;
+      height: 400px;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+    }
+    .control-button img {
+      width: 18px; 
+      height: 18px; 
+    }
+    .controls div {
+      padding: 12px 14px;
+      cursor: pointer;
+      border: 2px solid #83b9ed;
+      
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0 5px;
+      border-radius: 10px;
+    }
+    .controls div.disabled {
+      opacity: 0;
+      cursor: default;
+    }
+    .slider {
+      position: relative;
+      width: 140%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .slide {
+      display: flex;
+      position: absolute;
+      top: 15%;
+      left: 10%;
+      width: 82%;
+      height: 70%;
+      border: 2px solid #fff;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 20px;
+      opacity: 0;
+      padding: 20px;
+      transition: all 0.7s ease-out;
+    }
+    .slide img {
+        max-width: 40%; /* Adjust the width of the image */
+        max-height: 100%;
+        border-radius: 15px; /* Add border-radius for rounded corners if desired */
+    }
+    .slide-content {
+        flex-grow: 1;
+        margin-left: 20px; /* Adjust the margin between image and text */
+    }
+    .slide--active {
+      opacity: 1;
+      z-index: 9;
+    }
+    .prev,
+    .next {
+      opacity: .3; 
+    }
+    .prev {
+      transform: translate(0, -30%) scale(0.8);
+      color: #130808;
+    }
+    .next {
+      transform: translate(0, 30%) scale(0.8);
+    }
+   
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -39,7 +123,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/dashboard" class="nav-link">Home</a>
+        <a href="/predictions" class="nav-link">Home</a>
       </li>
     </ul>
     <!-- Right navbar links -->
@@ -57,7 +141,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-2" style="background-color: #2b70d2;">
     <!-- Brand Logo -->
-    <a href="/dashboard" class="brand-link d-flex align-items-center">
+    <a href="/predictions" class="brand-link d-flex align-items-center">
       <img src="{%static 'assets/dist/img/ailoan_logo_short.png' %}" alt="AIlOAN Logo" class="brand-image elevation-3" style="border-radius: 10px 10px; background-color: #FFFFFF;">
       <span class="brand-text font-weight-bold">Admin Dashboard</span>
     </a>
@@ -124,47 +208,78 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title"
-                style="color: rgb(155, 86, 190)"><b>About AILOAN</b></h3>
-          </div> <!-- /.card-body -->
-          <div class="card-body">
-              <p>By analyzing customer behavior, we can predict the risk factor associated with the possibility of a loan applicant defaulting.
-                 Leveraging tens of thousands of data points related to customer loan outcomes, our artificial intelligence algorithm determines 
-                 the risk factor associated with the likelihood of a loan applicant defaulting. Our model is trained to efficiently identify customers 
-                 with a high probability of default, allowing for the streamlined evaluation and assessment of a large number of loan applications. 
-                 This process utilizes AI to forecast the probability of loan approval by considering both previous customer behavior and historical data.
-                 The dataset used to train our model was found on Kaggle and can be accessed
-                 <a href="https://www.kaggle.com/datasets/subhamjain/loan-prediction-based-on-customer-behavior/data"
-                   style="color: rgb(161, 242, 246)">here</a>
-                  </p>
-          </div><!-- /.card-body -->
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">
+           About AILoan
+          </h4>
         </div>
-      </div><!-- /.container-fluid -->
+        <!-- /.card-header -->
+      <div class="container">
+        <div class="slider">
+          <div class="slide slide--active" data-slide='1' style="background-color: rgb(226, 192, 231)">
+            <img src="{%static 'images/accounting.png' %}" alt="Image 1">
+            <div class="slide-content">
+            <dt>Description</dt>
+            <p>By analyzing customer behavior, we can predict the risk factor associated with the possibility of a loan applicant defaulting.
+              Leveraging tens of thousands of data points related to customer loan outcomes, our artificial intelligence algorithm determines 
+              the risk factor associated with the likelihood of a loan applicant defaulting.
+               </p>
+        </div>
+      </div>
+          <div class="slide" data-slide='2' style="background-color: rgb(171, 194, 237)">
+            <img src="{%static 'images/online.png' %}" alt="Image 1">
+            <div class="slide-content">
+            <dt>Customer-Centric Approach</dt>
+            <p>Our model is trained to efficiently identify customers 
+              with a high probability of default, allowing for the streamlined evaluation and assessment of a large number of loan applications. 
+              This process utilizes AI to forecast the probability of loan approval by considering both previous customer behavior and historical data.
+              The dataset used to train our model was found on Kaggle and can be accessed
+              <a href="https://www.kaggle.com/datasets/subhamjain/loan-prediction-based-on-customer-behavior/data"
+                style="color: rgb(118, 43, 120)">here</a>
+            </p>
+          </div>
+        </div>
+          <div class="slide" data-slide='3' style="background-color: rgb(226, 192, 231)">
+            <img src="{%static 'images/analytics.png' %}" alt="Image 1">
+            <div class="slide-content">
+            <dt>Leading the Way in Technological Innovation</dt>
+            <p>All information provided to the platform will be handled in accordance with our Privacy Policy. Customer data uploaded to our service will be
+              securely stored and employed for the ongoing retraining of our models.
+            </p>
+          </div>
+        </div>
+        <div class="slide" data-slide='4' style="background-color: rgb(171, 194, 237)">
+            <img src="{%static 'images/chatbot.png' %}" alt="Image 1">
+            <div class="slide-content">
+            <dt>Leading the Way in Technological Innovation</dt>
+            <p>Our AI algorithms continuously learn and adjust to changing patterns, thereby
+              enhancing their capability to evaluate and forecast the probability of loan approval. This retraining procedure stands as a crucial component of our dedication to consistently improving the precision and efficiency of our artificial intelligence
+             algorithms in predicting loan approval results.
+            </p>
+          </div>
+        </div>
+        </div>
+        <div class="controls">
+          <div id="back" class="control-button" onclick="prevSlide()">
+            <img src="{%static 'images/caret-up.png' %}" alt="Back">
+          </div>
+          <div id="forward" class="control-button" onclick="nextSlide()">
+            <img src="{%static 'images/caret-down.png' %}" alt="Forward">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      <!-- /.card -->
+    </div>
+    
     </section>
     <!-- /.content -->
-
-    <section class="content">
-      <div class="container-fluid">
-        <div class="card card-primary card-outline">
-          <div class="card-header">
-            <h3 class="card-title"
-                style="color: rgb(155, 86, 190)"><b>How Data Is handled</b></h3>
-          </div> <!-- /.card-body -->
-          <div class="card-body">
-              <p>All information provided to the platform will be handled in accordance with our Privacy Policy. Customer data uploaded to our service will be
-                 securely stored and employed for the ongoing retraining of our models. Our AI algorithms continuously learn and adjust to changing patterns, thereby
-                 enhancing their capability to evaluate and forecast the probability of loan approval.
-
-                This retraining procedure stands as a crucial component of our dedication to consistently improving the precision and efficiency of our artificial intelligence
-                algorithms in predicting loan approval results.</p>
-          </div><!-- /.card-body -->
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
   </div>
+   
+
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
@@ -202,5 +317,6 @@
 <script src="{%static 'assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{%static 'assets/dist/js/adminlte.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
