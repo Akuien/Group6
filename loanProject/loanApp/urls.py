@@ -13,7 +13,6 @@ from .views import CustomPasswordResetView, CustomPasswordResetDoneView
 
 urlpatterns = [
     path('home', home, name='home'),
-    #path('admin-dashboard',admin_dashboard, name='admin_dashboard'),
     path('user-dashboard', user_dashboard),
     path('applicants',applicants, name='applicants'),
     path('information',information, name='information'),
