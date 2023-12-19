@@ -507,12 +507,11 @@ def performance(request):
         return render(request, 'admin/performance.html', {'error': f"Prediction error: {str(e)}"})
 
 
-
 def reports(request):
 
-    total_applications = Applicant.objects.count()
-    approved_applications = Applicant.objects.filter(risk_flag=1).count()
-    rejected_applications = Applicant.objects.filter(risk_flag=0).count()
+    total_applications = LoanApplicant.objects.count()
+    approved_applications = LoanApplicant.objects.filter(Default=0).count()
+    rejected_applications = LoanApplicant.objects.filter(Default=1).count()
 
     approval_rate = (approved_applications / total_applications) * 100 if total_applications > 0 else 0
     rejection_rate = (rejected_applications / total_applications) * 100 if total_applications > 0 else 0
@@ -521,21 +520,16 @@ def reports(request):
     approval_rate_formatted = "{:.2f}".format(approval_rate)
     rejection_rate_formatted = "{:.2f}".format(rejection_rate)
 
-    data = Applicant.objects.values_list('risk_flag', flat=True)
+    data = LoanApplicant.objects.values_list('Default', flat=True)
 
     # Create a Plotly histogram
     fig = px.histogram(x=data, nbins=10, title='Distribution of approval rates',
-                       labels={'x': 'risk_flag', 'y': 'Frequency'})
+                       labels={'x': 'Loan Status', 'y': 'Frequency'})
 
     fig.update_layout(xaxis=dict(tickvals=[0, 1]))
     fig.update_layout(height=300, width=400) 
-    # Convert the Plotly figure to HTML
     plot_html = fig.to_html(full_html=False)
 
-    # Pass data to the HTML template
-    #context = {'plot_html': plot_html}
-
-    # Pass data to the HTML template
     context = {
         'total_applications': total_applications,
         'approved_applications': approved_applications,
@@ -546,6 +540,7 @@ def reports(request):
     }
 
     return render(request, 'admin/reports.html', context)
+
 
 
 def information(request):
