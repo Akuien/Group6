@@ -38,36 +38,5 @@ class LoanApplicant(models.Model):
     DTIRatio = models.FloatField()
     Default = models.IntegerField(null=True, blank=True)
     
-class Applicant(models.Model):
-    id = models.AutoField(primary_key=True)
-    loan_id = models.IntegerField(unique=True, null=True, blank=True) 
-    income = models.BigIntegerField()
-    age = models.IntegerField()
-    experience = models.IntegerField()
-    marital_status = models.CharField(max_length=10, choices=[('single', 'Single'), ('married', 'Married')])
-    house_ownership = models.CharField(max_length=10, choices=[('rented', 'Rented'), ('owned', 'Owned')])
-    car_ownership = models.CharField(max_length=10, choices=[('no', 'No'), ('yes', 'Yes')])
-    profession = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    current_job_years = models.IntegerField()
-    current_house_years = models.IntegerField()
-    risk_flag = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.profession} from {self.city}, {self.state}"  
-    
-    def get_profession(self):
-        return self.profession
-
-    def get_income(self):
-        return self.income
-
-    def get_city(self):
-        return self.city
-
-    def get_state(self):
-        return self.state   
-    
 
 

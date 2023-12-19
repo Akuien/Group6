@@ -88,10 +88,6 @@ class NewUserForm(UserCreationForm):
         fields='__all__'
         
        
-class ApplicantForm(ModelForm):
-    class Meta:
-        model=Applicant
-        fields='__all__'
 
 class UserForm(ModelForm):
     class Meta:
