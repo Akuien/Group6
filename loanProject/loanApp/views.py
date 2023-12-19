@@ -7,6 +7,7 @@ from .forms import *
 from .models import *
 from .utils import *
 import plotly.express as px
+from plotly.offline import plot
 import base64
 import pandas as pd
 import joblib
@@ -345,49 +346,83 @@ def applicants(request):
 def predictions(request):
     context = {'messages': []}
 
-    if request.method == 'POST' and request.FILES['csv_file'] and 'selected_model' in request.POST:
-        csv_file = request.FILES['csv_file']
-        selected_model = request.POST['selected_model']
-
+    if request.method == 'POST' and request.FILES.get('csv_file') and 'selected_model' in request.POST:
         try:
+            csv_file = request.FILES['csv_file']
+            selected_model = request.POST['selected_model']
             model = select_model(selected_model)
+            csv_data = read_csv_file(csv_file)
+
+            expected_columns = ['Age', 'Income', 'LoanAmount', 'CreditScore', 'MonthsEmployed', 'LoanTerm', 'DTIRatio']
+            actual_columns = list(csv_data.columns)
+
+            if not all(column in actual_columns for column in expected_columns):
+                raise ValueError('Incorrect columns in the CSV file')
+            
+            if csv_data.empty:
+                raise ValueError('The CSV file is empty')
+
+            csv_data, records_list = apply_label_encoders(csv_data)
+            context['csv_data'] = {
+                'headers': list(records_list[0].keys()),
+                'records': records_list,
+            }
+            predictions_data = make_predictions(model, csv_data, records_list)
+
+            count_0 = 0
+            count_1 = 0
+
+            for record, prediction in zip(records_list, [prediction for _, prediction in predictions_data]):
+                save_to_database([record], [prediction])
+                if prediction == 0:
+                    count_0 += 1
+                elif prediction == 1:
+                    count_1 += 1
+
+            print("Count of 0:", count_0)
+            print("Count of 1:", count_1)
+
+            labels = ['0 (Approved)', '1 (Rejected)']
+            values = [count_0, count_1]
+            colors = ['lightgreen', 'lightcoral']
+            fig = px.pie(names=labels, values=values, color=labels, color_discrete_sequence=colors)
+            plot_div = plot(fig, output_type='div', include_plotlyjs=False)
+
+            context['predictions_data'] = {
+                'headers': list(records_list[0].keys()),
+                'records': predictions_data,
+                'plot_div': plot_div,
+                'chart_div_id': 'pie-chart-container',
+            }
+
         except FileNotFoundError as e:
-            return HttpResponse(str(e))
+            context['error_message'] = str(e)
+        except ValueError as e:
+            context['error_message'] = str(e)
 
-        csv_data = read_csv_file(csv_file)
-        csv_data, records_list = apply_label_encoders(csv_data)
-
-        context['csv_data'] = {
-            'headers': list(records_list[0].keys()),
-            'records': records_list,
-        }
-
-        predictions_data = make_predictions(model, csv_data, records_list)
-
-        context['predictions_data'] = {
-            'headers': list(records_list[0].keys()),
-            'records': predictions_data,
-        }
-        # Save to database with loan_id
-        for record, prediction in zip(records_list, [prediction for _, prediction in predictions_data]):
-            save_to_database([record], [prediction])
-
-    # Get the list of available models for the dropdown
     context['available_models'] = get_available_models()
-
     return render(request, 'admin/predictions.html', context)
 
 
 def performance(request):
     try:
-        # Load the model
-        model = joblib.load('loan_model.joblib')
+       # Get the list of available models for the dropdown
+        available_models = get_available_models()
+
+        if request.method == 'POST' and 'selected_model' in request.POST:
+            selected_model = request.POST['selected_model']
+        else:
+            # Default to the first available model if not selected
+            selected_model = available_models[0] if available_models else None
+
+        # Load the selected model
+        model = select_model(selected_model)
 
         # Get the features used during training from the Django model
-        features_used_in_training = [field.name for field in Applicant._meta.fields if field.name != 'id']
+        features_used_in_training = [field.name for field in LoanApplicant._meta.fields if field.name != 'id']
 
         # Get the test data from the Django model
-        test_data = Applicant.objects.all().values(*features_used_in_training)
+        test_data = LoanApplicant.objects.all().values(*features_used_in_training)
 
         # Create a DataFrame from the queryset
         test_data_df = pd.DataFrame.from_records(test_data, columns=features_used_in_training)
@@ -409,37 +444,30 @@ def performance(request):
         print("Test Data DataFrame:")
         print(test_data_df)
 
-        # Rename columns in the test_data_df to match the case in the training data
-        test_data_df = test_data_df.rename(columns={'age': 'Age', 'car_ownership': 'Car_Ownership', 'current_house_years': 'Current_House_Years',
-                                                    'current_job_years': 'Current_Job_Years', 'experience': 'Experience', 'house_ownership': 'House_Ownership',
-                                                    'income': 'Income', 'marital_status': 'Marital_Status', 'profession': 'Profession'})
+        # # Rename columns in the test_data_df to match the case in the training data
+        # test_data_df = test_data_df.rename(columns={'age': 'Age', 'car_ownership': 'Car_Ownership', 'current_house_years': 'Current_House_Years',
+        #                                             'current_job_years': 'Current_Job_Years', 'experience': 'Experience', 'house_ownership': 'House_Ownership',
+        #                                             'income': 'Income', 'marital_status': 'Marital_Status', 'profession': 'Profession'})
 
-        # Apply label encoding for each categorical variable
-        marital_status_encoder = LabelEncoder()
-        house_ownership_encoder = LabelEncoder()
-        car_ownership_encoder = LabelEncoder()
-        profession_encoder = LabelEncoder()
-
-        test_data_df['Marital_Status'] = marital_status_encoder.fit_transform(test_data_df['Marital_Status'])
-        test_data_df['House_Ownership'] = house_ownership_encoder.fit_transform(test_data_df['House_Ownership'])
-        test_data_df['Car_Ownership'] = car_ownership_encoder.fit_transform(test_data_df['Car_Ownership'])
-        test_data_df['Profession'] = profession_encoder.fit_transform(test_data_df['Profession'])
+        
 
         print("Columns before prediction:", test_data_df.columns)
 
         # Make predictions
-        if 'risk_flag' not in test_data_df.columns:
-            return render(request, 'performance.html', {'error': "'risk_flag' not found in the dataset"})
+        if 'Default' not in test_data_df.columns:
+            return render(request, 'performance.html', {'error': "'Default' not found in the dataset"})
+        
+        
 
         # Print prediction input
-        prediction_input = test_data_df.drop(['risk_flag', 'city', 'state','loan_id'], axis=1)
+        prediction_input = test_data_df.drop(['Default', 'LoanID'], axis=1)
         print("Prediction Input:")
         print(prediction_input)
 
         test_prediction = model.predict(prediction_input)
 
         # Fetch 'Risk_Flag' values from the database
-        Y_test = list(test_data_df['risk_flag'])
+        Y_test = list(test_data_df['Default'])
 
         # Handle NaN values in Y_test
         Y_test = np.nan_to_num(Y_test, nan=-1)  # Replace NaN with -1 or any other suitable value
@@ -462,6 +490,8 @@ def performance(request):
 
         # Pass values to the template
         context = {
+            'available_models': available_models,
+            'selected_model': selected_model,
             'accuracy': accuracy,
             'confusion_matrix': cm,
             'columns_after_missing_handling': test_data_df.columns.tolist()
@@ -475,6 +505,7 @@ def performance(request):
     except Exception as e:
         print("Error during prediction:", str(e))
         return render(request, 'admin/performance.html', {'error': f"Prediction error: {str(e)}"})
+
 
 
 def reports(request):
