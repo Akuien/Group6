@@ -33,7 +33,93 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    table {
+      width: 10%;
+      /* Adjust the width as needed */
+      margin: 10px;
+      /* Add some margin for spacing */
+      border-collapse: collapse;
+    }
+  
+    th,
+    td {
+      padding: 5px;
+      /* Adjust the padding as needed */
+      text-align: left;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
 
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    /* Adjusted styles for better integration with your layout */
+    .switch {
+      margin-left: 10px;
+    }
+
+    #viewIndicator {
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -48,7 +134,7 @@
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="/dashboard" class="nav-link">Home</a>
+          <a href="/predictions" class="nav-link">Home</a>
         </li>
       </ul>
       <!-- Right navbar links -->
@@ -66,7 +152,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-2" style="background-color: #2b70d2;">
       <!-- Brand Logo -->
-      <a href="/dashboard" class="brand-link d-flex align-items-center">
+      <a href="/predictions" class="brand-link d-flex align-items-center">
         <img src="{%static 'assets/dist/img/ailoan_logo_short.png' %}" alt="AIlOAN Logo" class="brand-image elevation-3"
           style="border-radius: 10px 10px; background-color: #FFFFFF;">
         <span class="brand-text font-weight-bold">Admin Dashboard</span>
@@ -155,13 +241,16 @@
                   <label for="csv_file">Upload CSV File:</label>
                   <input type="file" class="form-control" name="csv_file" accept=".csv" required>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Upload and Predict</button>
-                <button id="toggleChartTable" class="btn btn-secondary" onclick="toggleChartTable()">Toggle Chart/Table</button>
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <button type="submit" class="btn btn-primary">Upload and Predict</button> 
               </form>
-            </section>
 
+              <label class="switch">
+                <input type="checkbox" id="toggleSwitch">
+                <span class="slider"></span>
+              </label>
+              <p id="viewIndicator" style="margin-top: 10px; color: #6c757d;"></p>
+              
+            </section>
               <section class="content">
               <div id="chartTableContainer">
               <div id="pie-chart-container" style="height: 300px;">
@@ -219,6 +308,7 @@
                 </div>
               </div>
             </section>
+         
 
             </div><!-- /.card-body -->
           </div>
@@ -267,17 +357,17 @@
   <script src="{%static 'assets/dist/js/adminlte.js' %}"></script>
 
   <script>
-    $(document).ready(function () {
-      // Toggle between pie chart and table
-      $("#toggleChartTable").click(function () {
-        $("#pie-chart-container").toggle();
-        $("#table-container").toggle();
-      });
-  
-      // By default, show the pie chart
-      $("#pie-chart-container").show();
-      $("#table-container").hide();
+    $("#toggleSwitch").change(function () {
+        var isChecked = this.checked;
+        $("#viewIndicator").text("Viewing: " + (isChecked ? "Table" : "Pie Chart"));
+
+        // Toggle visibility of the chart and table containers based on the checkbox state
+        $("#pie-chart-container").css("display", isChecked ? "none" : "block");
+        $("#table-container").css("display", isChecked ? "block" : "none");
     });
+
+    // Set initial state
+    $("#viewIndicator").text("Viewing: Pie Chart");
   </script>
 
 <script>
@@ -292,20 +382,3 @@
 </body>
 
 </html>
-
-<style>
-  table {
-    width: 10%;
-    /* Adjust the width as needed */
-    margin: 10px;
-    /* Add some margin for spacing */
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    padding: 5px;
-    /* Adjust the padding as needed */
-    text-align: left;
-  }
-</style>
